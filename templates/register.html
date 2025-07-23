@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAGnosis Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style3.css') }}">
+</head>
+<body>
+    <div class="register-container">
+        <h2>Create an Account</h2>
+        <form id="registerForm">
+            <div class="form-group">
+                <input type="text" id="fullname" name="fullname" placeholder="First-Middle-Last Name" required>
+            </div>
+            <div class="form-group">
+                <input type="text" id="username" name="username" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+                <div id="passwordMatch" class="password-message"></div>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="/auth/login">Login</a></p>
+        <div id="registerMessage"></div>
+    </div>
+
+    <script>
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const passwordMatch = document.getElementById('passwordMatch');
+        const registerForm = document.getElementById('registerForm');
+        const registerMessage = document.getElementById('registerMessage');
+
+        confirmPassword.addEventListener('input', () => {
+            if (password.value !== confirmPassword.value) {
+                passwordMatch.textContent = "Passwords do not match.";
+                passwordMatch.style.color = "red";
+            } else {
+                passwordMatch.textContent = "Passwords match.";
+                passwordMatch.style.color = "green";
+            }
+        });
+
+        registerForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+        
+            if (password.value !== confirmPassword.value) {
+                alert("Passwords do not match. Please correct them.");
+                return;
+            }
+        
+            const formData = {
+                fullname: document.getElementById('fullname').value,
+                username: document.getElementById('username').value,
+                password: password.value
+            };
+        
+            try {
+                const response = await fetch('/auth/register', {  
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+        
+                const data = await response.json();
+        
+                if (response.ok) {
+                    registerMessage.textContent = data.message;
+                    registerMessage.style.color = "green";
+
+                    setTimeout(() => window.location.href = "/auth/login", 2000);
+                } else {
+                    registerMessage.textContent = data.error;
+                    registerMessage.style.color = "red";
+                }
+            } catch (error) {
+                registerMessage.textContent = "Error connecting to server.";
+                registerMessage.style.color = "red";
+            }
+        });
+    </script>
+</body>
+</html>

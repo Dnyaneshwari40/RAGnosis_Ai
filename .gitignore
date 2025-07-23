@@ -1,0 +1,43 @@
+# ========== Virtual Environments ==========
+tf_env/
+venv/
+env/
+
+# ========== Python Cache Files ==========
+__pycache__/
+*.py[cod]
+*.pyo
+
+# ========== System Files ==========
+.DS_Store
+Thumbs.db
+
+# ========== Secrets ==========
+.env
+
+# ========== IDE/Editor Configs (optional) ==========
+.vscode/
+*.code-workspace
+
+# ========== Node (if applicable) ==========
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ========== Logs ==========
+*.log
+
+# ========== Bytecode / Build ==========
+*.pyc
+*.pyd
+*.pdb
+*.so
+*.egg-info/
+dist/
+build/
+
+# ========== Backup or Temp Files ==========
+*.bak
+*.swp
+*~

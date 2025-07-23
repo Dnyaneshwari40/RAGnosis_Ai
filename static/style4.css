@@ -1,0 +1,249 @@
+/* 🌿 General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f0f8f4;
+    color: #333;
+}
+
+/* 🌟 Header */
+header {
+    background-color: #e8f5e9;
+    padding: 15px 20px;
+    text-align: right;
+    border-bottom: 1px solid #d1e8d5;
+}
+
+.user-info {
+    display: inline-block;
+}
+
+#username {
+    margin-right: 15px;
+    font-weight: 600;
+    color: #388e3c;
+}
+
+#logout {
+    background-color: #66bb6a;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#logout:hover {
+    background-color: #4caf50;
+}
+
+/* 📌 Main Layout */
+.container {
+    display: flex;
+    flex-grow: 1;
+}
+
+/* 📂 Left Panel (Upload Section) */
+.left-panel {
+    width: 320px;
+    background-color: #e0f2e7;
+    padding: 30px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    border-right: 1px solid #d1e8d5;
+    text-align: center;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* ✅ Center align */
+    gap: 20px;  /* ✅ Distance between elements */
+}
+
+/* 📌 Upload Heading */
+.left-panel h2 {
+    font-size: 1.5em;
+    color: #2e7d32;
+    margin-bottom: 20px;
+}
+
+/* 📂 Hidden File Input */
+#file-input {
+    display: none;
+}
+
+/* 📤 Custom File Upload Button */
+.upload-label {
+    display: inline-block;
+    background-color: #43a047;
+    color: white;
+    padding: 12px 20px;
+    font-size: 1.1em;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.upload-label:hover {
+    background-color: #388e3c;
+    transform: scale(1.05);
+}
+
+/* 🚀 Upload Button */
+#upload-button {
+    background-color: #66bb6a;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#upload-button:hover {
+    background-color: #4caf50;
+    transform: scale(1.05);
+}
+
+/* ✅ File Name Box (After Selecting File) */
+#file-name {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 1em;
+    background-color: rgba(67, 160, 71, 0.2);  /* ✅ Light Green Shade */
+    border-radius: 8px;
+    color: #2e7d32;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    max-width: 250px;
+    word-wrap: break-word;
+    display: none; /* ✅ Hidden by default */
+}
+
+/* 🖥️ Main Content */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+}
+
+/* 🎯 Action Buttons (Summarize, Analyze, RAGbot) */
+.action-container {
+    display: flex;
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.action-button {
+    padding: 25px 45px;
+    font-size: 1.3em;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background-color: #66bb6a;
+    color: white;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.action-button:hover {
+    background-color: #4caf50;
+    transform: translateY(-2px);
+}
+
+.action-button:active {
+    transform: translateY(1px);
+}
+
+/* 📜 Summary Box */
+.summary-container {
+    width: 80%;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#summary-text {
+    width: 100%;
+    height: 400px;
+    resize: none;
+    padding: 10px;
+    font-size: 1.2em;
+    border: 1px solid #d1e8d5;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 🌍 Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    /* 📂 Left Panel (Upload Section) */
+    .left-panel {
+        width: 320px;
+        background-color: #e0f2e7;
+        padding: 30px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        border-right: 1px solid #d1e8d5;
+        text-align: center;
+        border-radius: 10px;
+    }
+    
+    /* 📤 Custom File Upload Button */
+    .upload-label {
+        display: inline-block;
+        background-color: #43a047;
+        color: white;
+        padding: 12px 20px;
+        font-size: 1.1em;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background 0.3s ease, transform 0.2s ease;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 25px;  /* ✅ Added space below "Choose File" */
+    }
+    
+    .upload-label:hover {
+        background-color: #388e3c;
+        transform: scale(1.05);
+    }
+
+    /* ✅ Upload Status */
+    /* ✅ File Upload Message Styling */
+#upload-status {
+    margin-top: 15px;
+    padding: 10px;
+    font-size: 1em;
+    background-color: rgba(52, 105, 54, 0.2);  /* ✅ Light Green Shade */
+    border-radius: 8px;
+    color:rgb(18, 72, 21);
+    font-weight: bold;
+    text-align: center;
+    width: fit-content;
+    display: none; /* ✅ Hidden by default */
+}
+
+    
+    .summary-container {
+        width: 100%;
+    }
+}

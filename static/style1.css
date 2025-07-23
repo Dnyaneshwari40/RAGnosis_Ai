@@ -1,0 +1,151 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+hr {
+    border: 1px solid #e0e0e0;
+}
+
+header, footer {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    padding: 10px 20px;
+    text-align: right;
+}
+
+header a, footer a {
+    color: #2e7d32;
+    text-decoration: none;
+    margin-left: 15px;
+}
+
+header a:hover, footer a:hover {
+    text-decoration: underline;
+}
+
+main {
+    position: relative;
+    text-align: center;
+    padding: 100px 20px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+main video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+main .content {
+    position: relative;
+    z-index: 1;
+}
+
+main h1 {
+    font-family: Georgia;
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+main h2 {
+    font-size: 1.5em;
+    font-weight: normal;
+}
+
+.hero {
+    text-align: center;
+    padding: 200px 20px;
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.hero h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.hero h2 {
+    font-size: 1.5em;
+    font-weight: normal;
+}
+
+.features {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 20px;
+}
+
+.feature {
+    flex: 0 0 auto;
+    width: 300px;
+    margin: 0 15px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    scroll-snap-align: start;
+    background-color: #37474f;
+    color: #fff;
+}
+
+.feature:hover {
+    transform: translateY(-10px);
+}
+
+.feature img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+}
+
+.feature h3 {
+    margin-bottom: 10px;
+    color: #e0f7fa;
+}
+
+.feature p {
+    color: #cfd8dc;
+}
+
+footer {
+    text-align: center;
+}
+
+footer b {
+    color: #1b5e20;
+}
+
+header a b, footer a b {
+    transition: transform 0.3s ease;
+}
+
+header a b:hover, footer a b:hover {
+    transform: scale(1.1);
+}
+
+.features::-webkit-scrollbar {
+    display: none;
+}
+
+.features {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with PDF Bot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='chat.css') }}">
+</head>
+<body>
+    <div class="chat-container">
+        <h2>Chat with PDF Bot</h2>
+        <div class="chat-box" id="chat-box"></div>
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Ask something..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+
+        function appendMessage(sender, message) {
+            let chatBox = document.getElementById("chat-box");
+            let messageDiv = document.createElement("div");
+            messageDiv.classList.add("message", sender);
+            messageDiv.innerText = message;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        async function sendMessage() {
+            let userInput = document.getElementById("user-input");
+            let question = userInput.value.trim();
+            if (question === "") return;
+        
+            appendMessage("user", question);
+            userInput.value = "";
+        
+            try {
+                // ✅ Flask ke backend ke liye sahi request bhejna
+                let response = await fetch("http://127.0.0.1:5000/auth/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: question })  
+                });
+        
+                let data = await response.json();
+        
+                if (data.response) {
+                    appendMessage("bot", data.response);  
+                } else {
+                    appendMessage("bot", "Error: No response received.");
+                }
+        
+            } catch (error) {
+                appendMessage("bot", "Error fetching response.");
+                console.error("Error:", error);
+            }
+        }
+        
+        
+    </script>
+</body>
+</html>
