@@ -7,20 +7,33 @@ The system is designed to assist medical professionals in quickly understanding 
 
 Features
 Upload medical or clinical documents (PDFs, etc.)
+
 Extract content using Optical Character Recognition (OCR)
+
 Retrieve relevant context using ChromaDB
+
 Summarize documents using a language model (RAG approach)
+
 Web interface with chat-like interaction
+
 Secure handling of user-uploaded data (ignored via .gitignore)
 
 Technologies Used
+
 Programming Language: Python
+
 Framework: Flask
+
 Frontend: HTML, CSS, JavaScript (via templates)
+
 Database: ChromaDB (for vector search)
-Libraries:
-LangChain
+
+Libraries: LangChain
+
 PyMuPDF / fitz (PDF processing)
+
 socket.io (for real-time chat)
+
 OpenAI API / LLM (for text generation)
+
 Deployment: Local server or cloud-ready
