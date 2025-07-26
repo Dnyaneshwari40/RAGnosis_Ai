@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document Summarizer</title>
-   
-        <link rel="stylesheet" href="{{ url_for('static', filename='style4.css') }}">
-    </head>
-    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style4.css') }}">
 </head>
 <body>
 
@@ -35,18 +32,19 @@
                 <button class="action-button" id="analyze">Analyze</button>
                 <button class="action-button" id="ragbot">RAGbot</button>
             </div>
-            
+
             <div class="summary-container">
                 <textarea id="summary-text" rows="10" cols="50" readonly></textarea>
             </div>
         </main>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         let uploadedFilename = localStorage.getItem("uploadedFile") || null;
 
         $(document).ready(function () {
+            // Display filename when chosen
             $("#file-input").change(function () {
                 let file = this.files[0];
                 if (file) {
@@ -63,9 +61,9 @@
                 }
             });
 
-            //  Upload File Event
+            // Upload File Event
             $("#upload-button").click(function (event) {
-                event.preventDefault();  // reload stop
+                event.preventDefault(); // Stop default form submission
 
                 let file = $("#file-input")[0].files[0];
                 if (!file) {
@@ -76,37 +74,57 @@
                 let formData = new FormData();
                 formData.append("file", file);
 
+                $("#upload-status").text("Uploading...").css("color", "gray"); // Provide immediate feedback
+
                 $.ajax({
                     url: "http://127.0.0.1:5000/upload",
                     type: "POST",
                     data: formData,
-                    processData: false,
-                    contentType: false,
+                    processData: false, // Prevents jQuery from processing the data (important for FormData)
+                    contentType: false, // Prevents jQuery from setting the Content-Type header (important for FormData)
                     success: function (data) {
-                        console.log("File Uploaded:", data.filename);
+                        // The server should now always send 'filename' on success
+                        if (data.error) {
+                            console.error("Server-side logic error during upload:", data.error);
+                            $("#upload-status").text("Error: " + data.error).css("color", "red");
+                        } else {
+                            console.log("File Uploaded successfully:", data.filename); // 'data.filename' is now expected
+                            $("#upload-status").text("File uploaded: " + data.filename).css({
+                                "display": "block",
+                                "color": "#2e7d32",
+                                "background-color": "rgba(52, 105, 54, 0.2)",
+                                "padding": "10px",
+                                "border-radius": "8px",
+                                "text-align": "center"
+                            });
 
-                        $("#upload-status").text("File uploaded: " + data.filename).css({
-                            "display": "block",
-                            "color": "#2e7d32",
-                            "background-color": "rgba(52, 105, 54, 0.2)",
-                            "padding": "10px",
-                            "border-radius": "8px",
-                            "text-align": "center"
-                        });
-
-                        uploadedFilename = data.filename;
-                        localStorage.setItem("uploadedFile", uploadedFilename);
+                            uploadedFilename = data.filename;
+                            localStorage.setItem("uploadedFile", uploadedFilename);
+                        }
                     },
                     error: function (xhr) {
-                        console.error("Upload Error:", xhr.responseText);
-                        $("#upload-status").text("Error uploading file.");
+                        // This handles HTTP errors (e.g., 400, 500, 413 Payload Too Large)
+                        let errorMessage = "An unknown error occurred during upload.";
+                        try {
+                            const errorResponse = JSON.parse(xhr.responseText);
+                            if (errorResponse.error) {
+                                errorMessage = errorResponse.error;
+                            } else if (xhr.status === 413) {
+                                errorMessage = "File too large. Max allowed size: 50MB.";
+                            }
+                        } catch (e) {
+                            // If responseText is not valid JSON, use generic message
+                            errorMessage = `HTTP Error ${xhr.status}: ${xhr.statusText}`;
+                        }
+                        console.error("Upload AJAX Error:", xhr.status, xhr.responseText);
+                        $("#upload-status").text(errorMessage).css("color", "red");
                     }
                 });
             });
 
-            //  Summarize Button
+            // Summarize Button
             $("#summarize").click(function (event) {
-                event.preventDefault();  
+                event.preventDefault();
 
                 if (!uploadedFilename) {
                     alert("Please upload a file first.");
@@ -121,22 +139,39 @@
                     contentType: "application/json",
                     data: JSON.stringify({ filename: uploadedFilename }),
                     success: function (data) {
-                        console.log("Summary Received:", data.summary);
-                        $("#summary-text").val(data.summary);
+                        if (data.error) {
+                            console.error("Server-side summary error:", data.error);
+                            $("#summary-text").val("Error generating summary: " + data.error);
+                        } else {
+                            console.log("Summary Received:", data.summary);
+                            $("#summary-text").val(data.summary);
+                        }
                     },
                     error: function (xhr) {
-                        console.error("AJAX Error:", xhr.responseText);
-                        $("#summary-text").val("Error generating summary.");
+                        let errorMessage = "Error generating summary.";
+                        try {
+                            const errorResponse = JSON.parse(xhr.responseText);
+                            if (errorResponse.error) {
+                                errorMessage = errorResponse.error;
+                            }
+                        } catch (e) {}
+                        console.error("AJAX Error (Summarize):", xhr.status, xhr.responseText);
+                        $("#summary-text").val(errorMessage);
                     }
                 });
             });
 
             $("#ragbot").click(function () {
-                window.location.href = "/auth/chat";  
+                window.location.href = "/auth/chat";
             });
-            
+
             $("#analyze").click(function () {
                 alert("Analyze feature coming soon!");
+            });
+
+            $("#logout").click(function() {
+                localStorage.removeItem("uploadedFile");
+                window.location.href = "/auth/login";
             });
         });
     </script>
